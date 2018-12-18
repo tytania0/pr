@@ -1,0 +1,232 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+
+namespace informatika
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            string zap = @"itog.txt";
+            string science="science";
+            string style="style";
+            string culture = "culture";
+            string life ="life";
+            string economics ="economics";
+            string business = "business";
+            string travel = "travel";
+            string forces = "forces";
+            string media = "media";
+            string sport = "sport";
+            int n;
+            
+            List<string> sport1 = new List<string>();
+            List<string> science1 = new List<string>();
+            List<string> style1 = new List<string>();
+            List<string> culture1 = new List<string>();
+            List<string> life1 = new List<string>();
+            List<string> economics1 = new List<string>();
+            List<string> business1 = new List<string>();
+            List<string> travel1 = new List<string>();
+            List<string> forces1 = new List<string>();
+            List<string> media1 = new List<string>();
+            string[] lines = File.ReadAllLines("news_train.txt", Encoding.GetEncoding("utf-8"));
+            foreach (string s in lines)
+            {
+
+                string[] words = s.Split(' ', '\t', ',', '!', '(', ')', '?', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '"', '+', '-', '«', '»', '—', ':', ';', '/','<','>','$','%','&','=','№','~','`');
+                n = words.Length;
+              
+                if (words[0] == sport)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) sport1.Add(words[i]); }
+                }
+                else if (words[0] == science)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) science1.Add(words[i]); }
+                }
+                else if (words[0] == style)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2  ) style1.Add(words[i]); }
+                }
+                else if (words[0] == culture)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2  ) culture1.Add(words[i]); }
+                }
+                else if (words[0] == life)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) life1.Add(words[i]); }
+                }
+                else if (words[0] == economics)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) economics1.Add(words[i]); }
+                }
+                else if (words[0] == business)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) business1.Add(words[i]); }
+                }
+                else if (words[0] == travel)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) travel1.Add(words[i]); }
+                }
+                else if (words[0] == forces)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2 ) forces1.Add(words[i]); }
+                }
+                else if (words[0] == media)
+                {
+                    for (int i = 1; i < n; i++)
+                    { if (words[i].Length > 2) media1.Add(words[i]); }
+                }
+                
+            }
+           
+            media1.Sort();
+            culture1.Sort();
+            forces1.Sort();
+            travel1.Sort();
+            business1.Sort();
+            economics1.Sort();
+            sport1.Sort();
+            life1.Sort();
+            style1.Sort();
+            science1.Sort();
+            Console.WriteLine("закончил создание словарей");
+                int[] kol = new int[10];
+                string[] test = File.ReadAllLines("news_test.txt", Encoding.GetEncoding("utf-8"));
+               
+                foreach (string p in test)
+                {
+                    string[] words1 = p.Split(' ', '\t', ',', '!', '(', ')', '?', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '"', '+', '-', '«', '»', '—', ':', ';', '/', '<', '>', '$', '%', '&', '=', '№', '~', '`');
+
+                    foreach (string slovo in words1)
+                    {if (slovo.Length>2){
+                        if (sport1.BinarySearch(slovo)>0) { kol[0]++; }
+                        if (style1.BinarySearch(slovo) > 0) { kol[1]++; }
+                        if (life1.BinarySearch(slovo) > 0) { kol[2]++; }
+                        if (culture1.BinarySearch(slovo) > 0) { kol[3]++; }
+                        if (science1.BinarySearch(slovo) > 0) { kol[4]++; }
+                        if (media1.BinarySearch(slovo) > 0) { kol[5]++; }
+                        if (travel1.BinarySearch(slovo) > 0) { kol[6]++; }
+                        if (forces1.BinarySearch(slovo) > 0) { kol[7]++; }
+                        if (business1.BinarySearch(slovo) > 0) { kol[8]++; }
+                        if (economics1.BinarySearch(slovo) > 0) { kol[9]++; }
+                    }
+                    }
+                    int iMax=0; int rr=0;
+                    
+                    for (int i=0;i<10;i++)
+                    {
+                        if (kol[i] > rr)
+                        {
+                            rr = kol[i];
+                            iMax = i;
+                        }
+                    }
+                   
+                    if (iMax == 0)
+                    {
+                        using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                        {
+                            sw.WriteLine("sport");
+                            sw.Close();
+                        }
+                        
+                    }
+                    if (iMax == 1) {
+
+                        using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                        {
+                            sw.WriteLine("style");
+                            sw.Close();
+                        }
+                    }
+                        if (iMax == 2) {
+                            using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                            {
+                                sw.WriteLine("life");
+                                sw.Close();
+                            }
+                        }
+                        
+                            if (iMax == 3) {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("culture");
+                                    sw.Close();
+                                }
+                            }
+                            if (iMax == 4)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("science");
+                                    sw.Close();
+                                }
+                            }
+                            
+                            if (iMax == 5)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("media");
+                                    sw.Close();
+                                }
+                            }
+                            if (iMax == 6)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("travel");
+                                }
+                            }
+                            if (iMax == 7)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("forces");
+                                    sw.Close();
+                                }
+                            }
+                            if (iMax == 8)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("business");
+                                    sw.Close();
+                                }
+                            }
+                            if (iMax == 9)
+                            {
+                                using (StreamWriter sw = new StreamWriter(zap, true, Encoding.UTF8))
+                                {
+                                    sw.WriteLine("economics");
+                                    sw.Close();
+                                }   
+                            }
+                           
+                            
+                            for (int i = 0; i < 10; i++) { kol[i] = 0; }
+                           
+                }
+                
+            } 
+        }
+        
+    }
+
